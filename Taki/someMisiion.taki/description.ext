@@ -1,0 +1,9 @@
+ 
+
+#include "config\ER_Skills.cpp"
+ 
+  
+class CfgFunctions {
+    #include "Functions.hpp"
+};
+ 
