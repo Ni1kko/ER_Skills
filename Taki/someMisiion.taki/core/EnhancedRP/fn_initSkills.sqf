@@ -3,7 +3,7 @@ if ((uiNamespace getVariable ['ER_Skills_Init',0]) > 0)exitWith {diag_log "ER_Sk
 if (isNil {missionNamespace getVariable 'ER_Skills'}) exitWith {diag_log "ER_Skills: Failed To Load DB Data!!!"}; 
 uiNamespace setVariable ['ER_Skills_Init',time];
 private _isOk = true;
-private _classError = '';
+private _class = '';
 
 //Get skills From DB 
 private _playerSkills = missionNamespace getVariable ['ER_Skills',[]];
@@ -29,6 +29,7 @@ private _Skills = [missionConfigFile >> 'ER_Skills','skills',[]] call BIS_fnc_re
 	if !(_class in (_playerSkills apply {_x#0}))then{ 
 		private _newSkill = [_class,false];
 		_playerSkills pushBack _newSkill;  
+		_class = 'NEW-CLASS';
 	};  
 }forEach _Skills;
 
@@ -45,7 +46,7 @@ if !_isOk exitWith {diag_log format ["ER_Skills: Skill `%1` Is missing!!!",_clas
 }forEach _playerSkills;
 
 //Update DB 
-if (_classError isEqualTo 'NEW-CLASS')then{
+if (_class isEqualTo 'NEW-CLASS')then{
 	missionNamespace setVariable ['ER_Skills',_playerSkills];
 	[802] call AR_fnc_updatePartial; 
 };
